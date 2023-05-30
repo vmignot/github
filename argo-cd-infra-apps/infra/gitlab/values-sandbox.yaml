@@ -1,0 +1,70 @@
+---
+gitlab:
+  global:
+    hosts:
+      domain: sandbox.digital.grouperandstad.fr
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      tls:
+        enabled: true
+        secretName: gitlab-certificate
+    psql:
+      password:
+        useSecret: gitlab-secret
+      host: sandbox-gitlab.cmyspkvyo3kf.eu-west-3.rds.amazonaws.com
+    ## https://docs.gitlab.com/charts/installation/deployment#outgoing-email
+    ## Outgoing email server settings
+    smtp:
+      user_name: AKIA2SR5KT56ZOIO6FVL
+      ## https://docs.gitlab.com/charts/installation/secrets#smtp-password
+      password:
+        secret: gitlab-secret
+        key: smtppassword
+    ## https://docs.gitlab.com/charts/installation/deployment#outgoing-email
+    ## Email persona used in email sent by GitLab
+    email:
+      from: "gitlab@gitlab.sandbox.digital.grouperandstad.fr"
+      reply_to: "gitlab@gitlab.sandbox.digital.grouperandstad.fr"
+    ## https://docs.gitlab.com/charts/charts/globals#configure-registry-settings
+    registry:
+      bucket: gitlab-registry-storage-sandbox
+    ## https://docs.gitlab.com/charts/charts/globals#configure-appconfig-settings
+    ## Rails based portions of this chart share many settings
+    appConfig:
+      backups:
+        bucket: gitlab-backups-sandbox
+        tmpBucket: gitlab-backups-tmp-sandbox
+      lfs:
+        bucket: gitlab-lfs-storage-sandbox
+      artifacts:
+        bucket: gitlab-artifacts-storage-sandbox
+      uploads:
+        bucket: gitlab-uploads-storage-sandbox
+      packages:
+        bucket: gitlab-packages-storage-sandbox
+      externalDiffs:
+        bucket: gitlab-externaldiffs-storage-sandbox
+      terraformState:
+        bucket: gitlab-terraform-storage-sandbox
+      dependencyProxy:
+        bucket: gitlab-dependencyproxy-storage-sandbox
+  ## Settings for individual sub-charts under GitLab
+  ## Note: Many of these settings are configurable via globals
+  gitlab:
+    ## https://docs.gitlab.com/charts/charts/gitlab/migrations
+    migrations:
+      enabled: true
+##########
+monitoring:
+  enabled: true
+##########
+namespace:
+  name: gitlab
+  labels:
+    certificate: wildcard
+#########################
+external-secrets-generator:
+  externalSecrets:
+    - secretNameToCreate: gitlab-secret
+      awsSecretManagerNameToExtract: sandbox/gitlab

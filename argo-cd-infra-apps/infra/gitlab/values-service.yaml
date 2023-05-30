@@ -1,0 +1,68 @@
+---
+gitlab:
+  global:
+    hosts:
+      domain: service.digital.grouperandstad.fr
+    ingress:
+      tls:
+        enabled: true
+        secretName: wildcard-certificate
+    psql:
+      password:
+        useSecret: gitlab-secret
+      host: service-gitlab.crirllgnqeug.eu-west-3.rds.amazonaws.com
+    ## https://docs.gitlab.com/charts/installation/deployment#outgoing-email
+    ## Outgoing email server settings
+    smtp:
+      user_name: AKIATW7DWEX4AWUIJZG5
+      ## https://docs.gitlab.com/charts/installation/secrets#smtp-password
+      password:
+        secret: gitlab-secret
+        key: smtppassword
+    ## https://docs.gitlab.com/charts/installation/deployment#outgoing-email
+    ## Email persona used in email sent by GitLab
+    email:
+      from: "gitlab@gitlab.service.digital.grouperandstad.fr"
+      reply_to: "gitlab@gitlab.service.digital.grouperandstad.fr"
+    ## https://docs.gitlab.com/charts/charts/globals#configure-registry-settings
+    registry:
+      bucket: gitlab-registry-storage-service
+    ## https://docs.gitlab.com/charts/charts/globals#configure-appconfig-settings
+    ## Rails based portions of this chart share many settings
+    appConfig:
+      backups:
+        bucket: gitlab-backups-service
+        tmpBucket: gitlab-backups-tmp-service
+      lfs:
+        bucket: gitlab-lfs-storage-service
+      artifacts:
+        bucket: gitlab-artifacts-storage-service
+      uploads:
+        bucket: gitlab-uploads-storage-service
+      packages:
+        bucket: gitlab-packages-storage-service
+      externalDiffs:
+        bucket: gitlab-externaldiffs-storage-service
+      terraformState:
+        bucket: gitlab-terraform-storage-service
+      dependencyProxy:
+        bucket: gitlab-dependencyproxy-storage-service
+  ## Settings for individual sub-charts under GitLab
+  ## Note: Many of these settings are configurable via globals
+  gitlab:
+    ## https://docs.gitlab.com/charts/charts/gitlab/migrations
+    migrations:
+      enabled: false
+##########
+monitoring:
+  enabled: false
+##########
+namespace:
+  name: gitlab
+  labels:
+    certificate: wildcard
+#########################
+external-secrets-generator:
+  externalSecrets:
+    - secretNameToCreate: gitlab-secret
+      awsSecretManagerNameToExtract: service/gitlab
