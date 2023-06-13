@@ -70,3 +70,5 @@ external-secrets-generator:
       awsSecretManagerNameToExtract: service/gitlab
     - secretNameToCreate: gitlab-rails-secret
       awsSecretManagerNameToExtract: service/gitlab-secrets-yaml
+    - secretNameToCreate: gitlab-external-repo-rails-secret
+      awsSecretManagerNameToExtract: service/gitlab-secrets-yaml
