@@ -69,4 +69,4 @@ external-secrets-generator:
     - secretNameToCreate: gitlab-secret
       awsSecretManagerNameToExtract: service/gitlab
     - secretNameToCreate: gitlab-rails-secret
-      awsSecretManagerNameToExtract: sandbox/gitlab-secrets-yaml
+      awsSecretManagerNameToExtract: service/gitlab-secrets-yaml
