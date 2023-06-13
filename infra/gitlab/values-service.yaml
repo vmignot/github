@@ -53,6 +53,8 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
     migrations:
       enabled: false
+    gitlab-shell:
+      sshdLogLevel: VERBOSE
 ##########
 monitoring:
   enabled: false
@@ -66,3 +68,5 @@ external-secrets-generator:
   externalSecrets:
     - secretNameToCreate: gitlab-secret
       awsSecretManagerNameToExtract: service/gitlab
+    - secretNameToCreate: gitlab-rails-secret
+      awsSecretManagerNameToExtract: sandbox/gitlab-secrets-yaml
