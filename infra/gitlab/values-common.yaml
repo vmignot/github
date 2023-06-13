@@ -116,17 +116,14 @@ gitlab:
       tcpUserTimeout:
       password:
         secret: gitlab-secret
-      port: 5432
-      username: gitlab
-      database: gitlab
         # useSecret:
         # secret:
         # key:
         # file:
       # host: postgresql.hostedsomewhere.else
-      # port: 123
-      # username: gitlab
-      # database: gitlabhq_production
+      port: 5432
+      username: gitlab
+      database: gitlab
       # applicationName:
       # preparedStatements: false
       # databaseTasks: true
@@ -567,12 +564,12 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/globals#configure-registry-settings
     registry:
       bucket: registry
-      httpSecret:
-        secret: gitlab-registry-httpsecret
-        key: secret
       certificate:
         secret: gitlab-registry-secret
         key: registry-auth.crt
+      httpSecret:
+        secret: gitlab-registry-httpsecret
+        key: secret
       notificationSecret: {}
         # secret:
         # key:
@@ -691,7 +688,6 @@ gitlab:
       # secret:
       # key:
       tls: {}
-        # enabled: true
 
     ## https://docs.gitlab.com/charts/charts/globals#configure-webservice
     webservice:
@@ -706,7 +702,6 @@ gitlab:
         # ensuring that the image tag is available from both instances. The digest can be
         # found in the 'sync_images' job.
         #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 20191127-r2@sha256:367d437d024d7647432d67fb2442e3e5723af5930bad77d3535f4f8f4f8630d9
         # pullPolicy: IfNotPresent
         # pullSecrets: []
       customCAs: []
@@ -728,7 +723,6 @@ gitlab:
         # ensuring that the image tag is available from both instances. The digest can be
         # found in the 'sync_images' job.
         #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 1.18.20@sha256:8d27c191af306cafddba2f293c5613f8966363f779d79a5599ad0231e60069e4
         # pullPolicy: IfNotPresent
         # pullSecrets: []
       securityContext:
@@ -738,7 +732,6 @@ gitlab:
     busybox:
       image:
         repository: registry.gitlab.com/gitlab-org/cloud-native/mirror/images/busybox
-        tag: latest
         # pullPolicy: IfNotPresent
         # pullSecrets: []
 
@@ -863,9 +856,6 @@ gitlab:
       admissionWebhooks:
         enabled: false
     defaultBackend:
-      enabled: true
-      minAvailable: 1
-      replicaCount: 1
       resources:
         requests:
           cpu: 5m
@@ -1045,8 +1035,6 @@ gitlab:
     postgresqlPostgresPassword: bogus
     install: false
     postgresqlDatabase: gitlabhq_production
-    image:
-      tag: 12.7.0
     usePasswordFile: true
     existingSecret: bogus
     initdbScriptsConfigMap: bogus
@@ -1090,7 +1078,6 @@ gitlab:
         # ensuring that the image tag is available from both instances. The digest can be
         # found in the 'sync_images' job.
         #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 1.6.1@sha256:e89392e13b4ef12cd48ba8c30326aacd89a8d0161cb081ac8dfbb77200d5ebac
       keyAlgorithm: "rsa"
       keySize: "4096"
       expiry: "3650d"
@@ -1142,9 +1129,6 @@ gitlab:
   ## See requirements.yaml for current version
   ## Controlled by `global.grafana.enabled`
   grafana:
-    # Overrides the Grafana image tag for the 7.5.16 security update
-    image:
-      tag: 7.5.16
     ## Override and provide "bogus" administation secrets
     ## gitlab/gitlab-grafana provides overrides via shared-secrets
     nameOverride: grafana-app
@@ -1234,7 +1218,8 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/gitaly
     #   gitaly:
     ## https://docs.gitlab.com/charts/charts/gitlab/gitlab-shell
-    #   gitlab-shell:
+    gitlab-shell:
+      sshdLogLevel: VERBOSE
     #     enabled: false
     ## https://docs.gitlab.com/charts/charts/gitlab/gitlab-grafana
     #   gitlab-grafana:
