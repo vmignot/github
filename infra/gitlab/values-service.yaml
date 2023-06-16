@@ -53,8 +53,6 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
     migrations:
       enabled: true
-    gitlab-shell:
-      sshdLogLevel: VERBOSE
 ##########
 monitoring:
   enabled: true
