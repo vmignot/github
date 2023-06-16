@@ -1207,8 +1207,11 @@ gitlab:
             accessMode: ReadWriteOnce
             size: 10Gi
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
-    #   migrations:
-    #     enabled: false
+    # from https://gitlab.com/gitlab-org/charts/gitlab/-/issues/3021#note_991350772
+    migrations:
+      annotations:
+        "helm.sh/hook": "pre-install"
+        "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
     ## https://docs.gitlab.com/charts/charts/gitlab/webservice
     #   webservice:
     #     enabled: false
