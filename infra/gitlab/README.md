@@ -12,7 +12,7 @@ The timestamp to extract is: `1686912418_2023_06_16_15.4.6-ee`
 
     $ kubie ctx sandbox
 
-    $ kubectl exec -it $(kubectl get po -l app=toolbox -n gitlab -o=jsonpath='{.items[].metadata.name}') -n gitlab -it -- env BACKUP_BUCKET_NAME=gitlab-backups-service backup-utility --restore -t 1686912418_2023_06_16_15.4.6-ee
+    $ kubectl exec -it $(kubectl get po -l app=toolbox -n gitlab -o=jsonpath='{.items[].metadata.name}') -n gitlab -it -- env BACKUP_BUCKET_NAME=gitlab-backups-service backup-utility --restore -t 1686923491_2023_06_16_15.4.6-ee
 
 
 ### Connect to toolbox to disable ci_pipeline_schedules

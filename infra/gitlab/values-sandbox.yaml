@@ -55,8 +55,6 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
     migrations:
       enabled: true
-    gitlab:
-      gitlab-shell: sshDaemon
 ##########
 monitoring:
   enabled: true
