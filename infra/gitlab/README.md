@@ -1,3 +1,17 @@
+# First install
+First install wont run because of the following parameters:
+
+````yaml
+  gitlab:
+    ...
+    migrations:
+      annotations:
+        "helm.sh/hook": "pre-install"
+        "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
+````
+
+You have to remove those for the first sync.
+
 # Restore Gitlab from prod backup
 
 ### Get latest backup:

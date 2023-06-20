@@ -43,7 +43,7 @@ gitlab:
     edition: ee
 
     ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
-    gitlabVersion: "15.7.9"
+    gitlabVersion: "15.8.6"
 
     ## https://docs.gitlab.com/charts/charts/globals#application-resource
     application:
@@ -222,16 +222,16 @@ gitlab:
       maxRequestDurationSeconds:
 
       ## https://docs.gitlab.com/charts/charts/globals#cron-jobs-related-settings
-      cron_jobs: {}
+      cron_jobs:
         ## Flag stuck CI builds as failed
-        # stuck_ci_jobs_worker:
-        #   cron: "0 * * * *"
+        stuck_ci_jobs_worker:
+          cron: "0 * * * *"
         ## Schedule pipelines in the near future
         # pipeline_schedule_worker:
         #   cron: "19 * * * *"
         ## Remove expired build artifacts
-        # expire_build_artifacts_worker:
-        #   cron: "*/7 * * * *"
+        expire_build_artifacts_worker:
+          cron: "*/7 * * * *"
         ## Periodically run 'git fsck' on all repositories.
         # repository_check_worker:
         #   cron: "20 * * * *"
@@ -239,16 +239,16 @@ gitlab:
         # admin_email_worker:
         #   cron: "0 0 * * 0"
         ## Remove outdated repository archives
-        # repository_archive_cache_worker:
-        #   cron: "0 * * * *"
+        repository_archive_cache_worker:
+          cron: "0 * * * *"
         ## Verify custom GitLab Pages domains
         # pages_domain_verification_cron_worker:
         #   cron: "*/15 * * * *"
         # schedule_migrate_external_diffs_worker:
         #   cron: "15 * * * *"
         ## Prune stale group runners on opted-in namespaces
-        # ci_runners_stale_group_runners_prune_worker_cron:
-        #   cron: "30 * * * *"
+        ci_runners_stale_group_runners_prune_worker_cron:
+          cron: "30 * * * *"
         ## Periodically update ci_runner_versions table with up-to-date versions and status
         # ci_runner_versions_reconciliation_worker:
         #   cron: "@daily"
@@ -396,6 +396,7 @@ gitlab:
         password:
           secret: ""
           key: password
+        deleteAfterDelivery: true
         expungeDeleted: false
         logger:
           logPath: "/dev/stdout"
@@ -422,6 +423,7 @@ gitlab:
         password:
           secret: ""
           key: password
+        deleteAfterDelivery: true
         expungeDeleted: false
         logger:
           logPath: "/dev/stdout"
@@ -554,6 +556,11 @@ gitlab:
       enabled: true
       service:
         apiExternalPort: 8153 # port for connections from the GitLab backend
+      tls:
+        enabled: false
+        verify: true
+        # secretName:
+        # caSecretName:
 
     ## https://docs.gitlab.com/charts/charts/gitlab/spamcheck/
     spamcheck:
@@ -1244,6 +1251,7 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
     # from https://gitlab.com/gitlab-org/charts/gitlab/-/issues/3021#note_991350772
     migrations:
+      enabled: true
       annotations:
         "helm.sh/hook": "pre-install"
         "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
