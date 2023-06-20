@@ -222,16 +222,16 @@ gitlab:
       maxRequestDurationSeconds:
 
       ## https://docs.gitlab.com/charts/charts/globals#cron-jobs-related-settings
-      cron_jobs: {}
+      cron_jobs:
         ## Flag stuck CI builds as failed
-        # stuck_ci_jobs_worker:
-        #   cron: "0 * * * *"
+        stuck_ci_jobs_worker:
+          cron: "0 * * * *"
         ## Schedule pipelines in the near future
         # pipeline_schedule_worker:
         #   cron: "19 * * * *"
         ## Remove expired build artifacts
-        # expire_build_artifacts_worker:
-        #   cron: "*/7 * * * *"
+        expire_build_artifacts_worker:
+          cron: "*/7 * * * *"
         ## Periodically run 'git fsck' on all repositories.
         # repository_check_worker:
         #   cron: "20 * * * *"
@@ -239,16 +239,16 @@ gitlab:
         # admin_email_worker:
         #   cron: "0 0 * * 0"
         ## Remove outdated repository archives
-        # repository_archive_cache_worker:
-        #   cron: "0 * * * *"
+        repository_archive_cache_worker:
+          cron: "0 * * * *"
         ## Verify custom GitLab Pages domains
         # pages_domain_verification_cron_worker:
         #   cron: "*/15 * * * *"
         # schedule_migrate_external_diffs_worker:
         #   cron: "15 * * * *"
         ## Prune stale group runners on opted-in namespaces
-        # ci_runners_stale_group_runners_prune_worker_cron:
-        #   cron: "30 * * * *"
+        ci_runners_stale_group_runners_prune_worker_cron:
+          cron: "30 * * * *"
         ## Periodically update ci_runner_versions table with up-to-date versions and status
         # ci_runner_versions_reconciliation_worker:
         #   cron: "@daily"
