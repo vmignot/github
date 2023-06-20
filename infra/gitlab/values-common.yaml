@@ -43,7 +43,7 @@ gitlab:
     edition: ee
 
     ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
-    gitlabVersion: "15.7.9"
+    gitlabVersion: "15.8.6"
 
     ## https://docs.gitlab.com/charts/charts/globals#application-resource
     application:
@@ -396,6 +396,7 @@ gitlab:
         password:
           secret: ""
           key: password
+        deleteAfterDelivery: true
         expungeDeleted: false
         logger:
           logPath: "/dev/stdout"
@@ -422,6 +423,7 @@ gitlab:
         password:
           secret: ""
           key: password
+        deleteAfterDelivery: true
         expungeDeleted: false
         logger:
           logPath: "/dev/stdout"
@@ -554,6 +556,11 @@ gitlab:
       enabled: true
       service:
         apiExternalPort: 8153 # port for connections from the GitLab backend
+      tls:
+        enabled: false
+        verify: true
+        # secretName:
+        # caSecretName:
 
     ## https://docs.gitlab.com/charts/charts/gitlab/spamcheck/
     spamcheck:
@@ -1244,6 +1251,7 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
     # from https://gitlab.com/gitlab-org/charts/gitlab/-/issues/3021#note_991350772
     migrations:
+      enabled: true
       annotations:
         "helm.sh/hook": "pre-install"
         "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"

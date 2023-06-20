@@ -47,12 +47,6 @@ gitlab:
         bucket: gitlab-terraform-storage-service
       dependencyProxy:
         bucket: gitlab-dependencyproxy-storage-service
-  ## Settings for individual sub-charts under GitLab
-  ## Note: Many of these settings are configurable via globals
-  gitlab:
-    ## https://docs.gitlab.com/charts/charts/gitlab/migrations
-    migrations:
-      enabled: true
 ##########
 monitoring:
   enabled: true
