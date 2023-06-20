@@ -33,7 +33,6 @@ gitlab:
     image: {}
       # pullPolicy: IfNotPresent
       # pullSecrets: []
-      # tagSuffix: ""
 
     ## Supplemental Pod labels. Will not be used for selectors.
     pod:
@@ -43,7 +42,7 @@ gitlab:
     edition: ee
 
     ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
-    gitlabVersion: "15.6.8"
+    # gitlabVersion:
 
     ## https://docs.gitlab.com/charts/charts/globals#application-resource
     application:
@@ -165,7 +164,6 @@ gitlab:
 
     praefect:
       enabled: false
-      ntpHost: pool.ntp.org
       replaceInternalGitaly: true
       authToken: {}
       autoMigrate: true
@@ -369,19 +367,6 @@ gitlab:
       backups:
         bucket: gitlab
         tmpBucket: tmp
-
-      ## https://docs.gitlab.com/charts/charts/globals#outgoing-email
-      ## Microsoft Graph Mailer settings
-      microsoft_graph_mailer:
-        enabled: false
-        user_id: ""
-        tenant: ""
-        client_id: ""
-        client_secret:
-          secret: ""
-          key: secret
-        azure_ad_endpoint: "https://login.microsoftonline.com"
-        graph_endpoint: "https://graph.microsoft.com"
 
       ## https://docs.gitlab.com/charts/installation/command-line-options.html#incoming-email-configuration
       ## https://docs.gitlab.com/charts/charts/gitlab/mailroom/index.html#incoming-email
@@ -645,7 +630,7 @@ gitlab:
       registrationToken: {}
         # secret:
 
-    ## https://docs.gitlab.com/charts/charts/globals#outgoing-email
+    ## https://docs.gitlab.com/charts/installation/deployment#outgoing-email
     ## Outgoing email server settings
     smtp:
       enabled: true
@@ -662,7 +647,7 @@ gitlab:
       openssl_verify_mode: "none"
       pool: false
 
-    ## https://docs.gitlab.com/charts/charts/globals#outgoing-email
+    ## https://docs.gitlab.com/charts/installation/deployment#outgoing-email
     ## Email persona used in email sent by GitLab
     email:
       from: ""
@@ -692,10 +677,6 @@ gitlab:
       podAntiAffinity:
         topologyKey: "kubernetes.io/hostname"
 
-    # Priority class assigned to pods, may be overridden for individual components
-    # https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
-    priorityClassName: ""
-
     ## https://docs.gitlab.com/charts/charts/globals#configure-workhorse-settings
     ## Global settings related to Workhorse
     workhorse:
@@ -721,7 +702,6 @@ gitlab:
         # ensuring that the image tag is available from both instances. The digest can be
         # found in the 'sync_images' job.
         #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 20191127-r2@sha256:367d437d024d7647432d67fb2442e3e5723af5930bad77d3535f4f8f4f8630d9
         # pullPolicy: IfNotPresent
         # pullSecrets: []
       customCAs: []
@@ -743,7 +723,6 @@ gitlab:
         # ensuring that the image tag is available from both instances. The digest can be
         # found in the 'sync_images' job.
         #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 1.18.20@sha256:8d27c191af306cafddba2f293c5613f8966363f779d79a5599ad0231e60069e4
         # pullPolicy: IfNotPresent
         # pullSecrets: []
       securityContext:
@@ -753,7 +732,6 @@ gitlab:
     busybox:
       image:
         repository: registry.gitlab.com/gitlab-org/cloud-native/mirror/images/busybox
-        tag: latest
         # pullPolicy: IfNotPresent
         # pullSecrets: []
 
@@ -813,7 +791,6 @@ gitlab:
     resources:
       requests:
         cpu: 50m
-    priorityClassName: ""
 
   ## Settings to for the Let's Encrypt ACME Issuer
   certmanager-issuer:
@@ -845,7 +822,6 @@ gitlab:
         Referrer-Policy: strict-origin-when-cross-origin
       allowSnippetAnnotations: false
       config:
-        annotation-value-word-blocklist: "load_module,lua_package,_by_lua,location,root,proxy_pass,serviceaccount,{,},',\""
         hsts: "true"
         hsts-include-subdomains: "false"
         hsts-max-age: "63072000"
@@ -1059,8 +1035,6 @@ gitlab:
     postgresqlPostgresPassword: bogus
     install: false
     postgresqlDatabase: gitlabhq_production
-    image:
-      tag: 12.7.0
     usePasswordFile: true
     existingSecret: bogus
     initdbScriptsConfigMap: bogus
@@ -1104,7 +1078,6 @@ gitlab:
         # ensuring that the image tag is available from both instances. The digest can be
         # found in the 'sync_images' job.
         #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 1.6.1@sha256:e89392e13b4ef12cd48ba8c30326aacd89a8d0161cb081ac8dfbb77200d5ebac
       keyAlgorithm: "rsa"
       keySize: "4096"
       expiry: "3650d"
@@ -1156,9 +1129,6 @@ gitlab:
   ## See requirements.yaml for current version
   ## Controlled by `global.grafana.enabled`
   grafana:
-    # Overrides the Grafana image tag for the 7.5.16 security update
-    image:
-      tag: 7.5.16
     ## Override and provide "bogus" administation secrets
     ## gitlab/gitlab-grafana provides overrides via shared-secrets
     nameOverride: grafana-app
@@ -1251,7 +1221,8 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/gitaly
     #   gitaly:
     ## https://docs.gitlab.com/charts/charts/gitlab/gitlab-shell
-    #   gitlab-shell:
+    gitlab-shell:
+      sshdLogLevel: VERBOSE
     #     enabled: false
     ## https://docs.gitlab.com/charts/charts/gitlab/gitlab-grafana
     #   gitlab-grafana:
