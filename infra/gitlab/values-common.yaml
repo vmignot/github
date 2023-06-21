@@ -1078,7 +1078,7 @@ gitlab:
     postgresqlUsername: gitlab
     # This just needs to be set. It will use a second entry in existingSecret for postgresql-postgres-password
     postgresqlPostgresPassword: bogus
-    install: true
+    install: false
     postgresqlDatabase: gitlabhq_production
     image:
       tag: 12.7.0
