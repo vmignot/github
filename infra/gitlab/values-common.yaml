@@ -43,7 +43,7 @@ gitlab:
     edition: ee
 
     ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
-    gitlabVersion: "15.8.6"
+    gitlabVersion: "15.9.8"
 
     ## https://docs.gitlab.com/charts/charts/globals#application-resource
     application:
@@ -137,6 +137,7 @@ gitlab:
         # key:
       # host: redis.hostedsomewhere.else
       # port: 6379
+      # user: webservice
       # sentinels:
       #   - host:
       #     port:
@@ -252,6 +253,9 @@ gitlab:
         ## Periodically update ci_runner_versions table with up-to-date versions and status
         # ci_runner_versions_reconciliation_worker:
         #   cron: "@daily"
+        ## Periodically clean up stale ci_runner_machines records
+        ci_runners_stale_machines_cleanup_worker:
+          cron: "36 4 * * *"
         ### GitLab Geo
         # Geo Primary only!
         # geo_prune_event_log_worker:
@@ -728,12 +732,9 @@ gitlab:
     # configuration of certificates container & custom CA injection
     certificates:
       image:
-        repository: registry.gitlab.com/gitlab-org/build/cng/alpine-certificates
-        # The digest below comes from a given tag pipeline because they are mirrored to .com,
-        # ensuring that the image tag is available from both instances. The digest can be
-        # found in the 'sync_images' job.
-        #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 20191127-r2@sha256:367d437d024d7647432d67fb2442e3e5723af5930bad77d3535f4f8f4f8630d9
+        repository: registry.gitlab.com/gitlab-org/build/cng/certificates
+        # Default tag is `master`, overridable by `global.gitlabVersion`.
+        # tag: master
         # pullPolicy: IfNotPresent
         # pullSecrets: []
       customCAs: []
@@ -751,11 +752,8 @@ gitlab:
     kubectl:
       image:
         repository: registry.gitlab.com/gitlab-org/build/cng/kubectl
-        # The digest below comes from a given tag pipeline because they are mirrored to .com,
-        # ensuring that the image tag is available from both instances. The digest can be
-        # found in the 'sync_images' job.
-        #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 1.24.7@sha256:4be8ed0fb89c29c5bacf0dcedee803e1ac1298da9a45186eb5a391c2353c6bf6
+        # Default tag is `master`, overridable by `global.gitlabVersion`.
+        # tag: master
         # pullPolicy: IfNotPresent
         # pullSecrets: []
       securityContext:
@@ -765,7 +763,7 @@ gitlab:
     busybox:
       image:
         repository: registry.gitlab.com/gitlab-org/cloud-native/mirror/images/busybox
-        tag: latest
+        # tag: latest
         # pullPolicy: IfNotPresent
         # pullSecrets: []
 
@@ -870,7 +868,7 @@ gitlab:
         externalTrafficPolicy: "Local"
       ingressClassByName: false
       ingressClassResource:
-        name: '{{ include "ingress.class.name" $ }}'
+        name: '{{ include "ingress.class.name" $ | quote }}'
       resources:
         requests:
           cpu: 100m
@@ -1112,11 +1110,8 @@ gitlab:
         # pullPolicy: IfNotPresent
         # pullSecrets: []
         repository: registry.gitlab.com/gitlab-org/build/cng/cfssl-self-sign
-        # The digest below comes from a given tag pipeline because they are mirrored to .com,
-        # ensuring that the image tag is available from both instances. The digest can be
-        # found in the 'sync_images' job.
-        #   https://dev.gitlab.org/gitlab/charts/components/images/-/tags
-        tag: 1.6.1@sha256:e89392e13b4ef12cd48ba8c30326aacd89a8d0161cb081ac8dfbb77200d5ebac
+        # Default tag is `master`, overridable by `global.gitlabVersion`.
+        # tag: master
       keyAlgorithm: "rsa"
       keySize: "4096"
       expiry: "3650d"
@@ -1251,7 +1246,7 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
     # from https://gitlab.com/gitlab-org/charts/gitlab/-/issues/3021#note_991350772
     migrations:
-      enabled: false
+      enabled: true
       annotations:
         "helm.sh/hook": "pre-install"
         "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
