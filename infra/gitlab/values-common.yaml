@@ -1253,7 +1253,7 @@ gitlab:
     migrations:
       enabled: true
       annotations:
-        "helm.sh/hook": "pre-install"
+        "helm.sh/hook": "post-install"
         "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
     ## https://docs.gitlab.com/charts/charts/gitlab/webservice
     #   webservice:
