@@ -43,7 +43,7 @@ gitlab:
     edition: ee
 
     ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
-    gitlabVersion: "15.9.8"
+    gitlabVersion: "15.10.8"
 
     ## https://docs.gitlab.com/charts/charts/globals#application-resource
     application:
@@ -676,6 +676,8 @@ gitlab:
       authentication: "login"
       starttls_auto: true
       openssl_verify_mode: "none"
+      open_timeout: 30
+      read_timeout: 60
       pool: false
 
     ## https://docs.gitlab.com/charts/charts/globals#outgoing-email
@@ -923,7 +925,8 @@ gitlab:
       retention: 15d
       strategy:
         type: Recreate
-    #
+      image:
+        tag: v2.38.0
     serverFiles:
       prometheus.yml:
         scrape_configs:
