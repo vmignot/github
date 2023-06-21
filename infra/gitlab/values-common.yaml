@@ -43,7 +43,7 @@ gitlab:
     edition: ee
 
     ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
-    gitlabVersion: "15.10.8"
+    gitlabVersion: "15.11.9"
 
     ## https://docs.gitlab.com/charts/charts/globals#application-resource
     application:
@@ -448,6 +448,14 @@ gitlab:
         preventSignin: false
         servers: {}
         ## See documentation for complete example of a configured LDAP server
+
+      duoAuth:
+        enabled: false
+        # hostname:
+        # integrationKey:
+        # secretKey:
+        #   secret:
+        #   key:
 
       ## https://docs.gitlab.com/charts/charts/globals#kas-settings
       gitlab_kas: {}
@@ -1070,7 +1078,7 @@ gitlab:
     postgresqlUsername: gitlab
     # This just needs to be set. It will use a second entry in existingSecret for postgresql-postgres-password
     postgresqlPostgresPassword: bogus
-    install: false
+    install: true
     postgresqlDatabase: gitlabhq_production
     image:
       tag: 12.7.0
@@ -1086,6 +1094,13 @@ gitlab:
         postgresql.gitlab/init-revision: "1"
     metrics:
       enabled: true
+      service:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "9187"
+          gitlab.com/prometheus_scrape: "true"
+          gitlab.com/prometheus_port: "9187"
+
       ## Optionally define additional custom metrics
       ## ref: https://github.com/wrouesnel/postgres_exporter#adding-new-metrics-via-a-config-file
 
@@ -1271,3 +1286,7 @@ gitlab:
     #   kas:
     ## https://docs.gitlab.com/charts/charts/gitlab/praefect
     #   praefect:
+
+  ## Installation & configuration of gitlab/gitlab-zoekt
+  gitlab-zoekt:
+    install: false
