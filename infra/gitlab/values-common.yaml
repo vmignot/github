@@ -131,10 +131,10 @@ gitlab:
 
     ## https://docs.gitlab.com/charts/charts/globals#configure-redis-settings
     redis:
-      password:
+      auth:
         enabled: true
-        # secret:
-        # key:
+        secret: gitlab-redis
+        key: secret
       # host: redis.hostedsomewhere.else
       # port: 6379
       # user: webservice
