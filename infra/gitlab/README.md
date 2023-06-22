@@ -37,6 +37,7 @@ The timestamp to extract is: `1686912418_2023_06_16_15.4.6-ee`
 
     $ UPDATE ci_pipeline_schedules SET active='f';
 
+
 # Upgrading gitlab
 Upgrading gitlab is a tricky because ArgoCD is plugged on it.
 Even Gitlab itself is sync via ArgoCD and via itself.
@@ -50,14 +51,3 @@ So you need to:
 
 ## 2. Push you code on another repository
 TODO
-
-# Upgrading 6.11.x to 7.xx
-(from: https://docs.gitlab.com/charts/installation/upgrade.html#update-the-bundled-redis-sub-chart )
-
-    $ kubectl scale deployment --replicas 0 --selector 'app in (webservice, sidekiq, kas, gitlab-exporter)' --namespace gitlab
-    $ kubectl delete statefulset gitlab-redis-master --namespace gitlab
-
-    // Go sync
-
-    $ kubectl scale deployment --replicas 2 --selector 'app in (webservice, sidekiq, kas)' --namespace gitlab
-    $ kubectl scale deployment --replicas 1 --selector 'app in (gitlab-exporter)' --namespace gitlab
