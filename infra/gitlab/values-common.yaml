@@ -1264,9 +1264,10 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/gitlab/migrations
     # from https://gitlab.com/gitlab-org/charts/gitlab/-/issues/3021#note_991350772
     migrations:
-      enabled: true
+      enabled: false
       annotations:
         "helm.sh/hook": "pre-install"
+        "helm.sh/hook-weight": "-100"
         "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
     ## https://docs.gitlab.com/charts/charts/gitlab/webservice
     #   webservice:
