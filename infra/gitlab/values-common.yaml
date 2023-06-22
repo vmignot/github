@@ -133,7 +133,7 @@ gitlab:
     redis:
       auth:
         enabled: true
-        secret: gitlab-redis
+        secret: gitlab-redis-secret
         key: secret
       # host: redis.hostedsomewhere.else
       # port: 6379
