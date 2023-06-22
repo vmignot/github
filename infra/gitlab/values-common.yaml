@@ -1240,8 +1240,6 @@ gitlab:
     migrations:
       enabled: true
       annotations:
-        "helm.sh/hook": "post-install"
-        "helm.sh/hook-weight": "-100"
         "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
     ## https://docs.gitlab.com/charts/charts/gitlab/webservice
     #   webservice:
