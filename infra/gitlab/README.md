@@ -59,5 +59,5 @@ TODO
 
     // Go sync
 
-    $ kubectl scale deployment --replicas 2 --selector 'app in (webservice, sidekiq, kas)' --namespace gitlab
-    $ kubectl scale deployment --replicas 1 --selector 'app in (gitlab-exporter)' --namespace gitlab
+    $ kubectl scale deployment --replicas 1 --selector 'app in (gitlab-exporter, sidekiq)' --namespace gitlab
+    $ kubectl scale deployment --replicas 2 --selector 'app in (webservice, kas)' --namespace gitlab
