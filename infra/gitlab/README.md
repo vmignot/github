@@ -57,7 +57,8 @@ TODO
     $ kubectl scale deployment --replicas 0 --selector 'app in (webservice, sidekiq, kas, gitlab-exporter)' --namespace gitlab
     $ kubectl delete statefulset gitlab-redis-master --namespace gitlab
 
-    // Go sync
+    // Go sync REDIS
+    // Go sync le reste
 
     $ kubectl scale deployment --replicas 1 --selector 'app in (gitlab-exporter, sidekiq)' --namespace gitlab
     $ kubectl scale deployment --replicas 2 --selector 'app in (webservice, kas)' --namespace gitlab
