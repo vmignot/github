@@ -64,3 +64,5 @@ external-secrets-generator:
       awsSecretManagerNameToExtract: sandbox/gitlab
     - secretNameToCreate: gitlab-rails-secret
       awsSecretManagerNameToExtract: sandbox/gitlab-secrets-yaml
+    - secretNameToCreate: gitlab-runner-secret
+      awsSecretManagerNameToExtract: sandbox/gitlab-runner-registration-token
