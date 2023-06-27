@@ -209,7 +209,6 @@ gitlab:
       enableSeatLink: true
       enableImpersonation:
       applicationSettingsCacheSeconds: 60
-      defaultCanCreateGroup: true
       usernameChangingEnabled: true
       issueClosingPattern:
       defaultTheme:
@@ -255,7 +254,7 @@ gitlab:
         #   cron: "@daily"
         ## Periodically clean up stale ci_runner_machines records
         ci_runners_stale_machines_cleanup_worker:
-          cron: "36 4 * * *"
+          cron: "36 * * * *"
         ### GitLab Geo
         # Geo Primary only!
         # geo_prune_event_log_worker:
@@ -780,10 +779,12 @@ gitlab:
         # in most base images, this is `nobody:nogroup`
         runAsUser: 65534
         fsGroup: 65534
-    busybox:
+    gitlabBase:
       image:
-        repository: registry.gitlab.com/gitlab-org/cloud-native/mirror/images/busybox
-        # tag: latest
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-base
+        # Default tag is `global.gitlabVersion` or `master` if the former one is undefined.
+        # Charts using this image as init container support further overrides with `init.image.tag`.
+        # tag: master
         # pullPolicy: IfNotPresent
         # pullSecrets: []
 
@@ -1239,9 +1240,6 @@ gitlab:
     # from https://gitlab.com/gitlab-org/charts/gitlab/-/issues/3021#note_991350772
     migrations:
       enabled: true
-      annotations:
-        "helm.sh/hook": "pre-install"
-        "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
     ## https://docs.gitlab.com/charts/charts/gitlab/webservice
     #   webservice:
     #     enabled: false
