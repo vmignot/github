@@ -27,6 +27,9 @@ gitlab:
     ## https://docs.gitlab.com/charts/charts/globals#configure-registry-settings
     registry:
       bucket: gitlab-registry-storage-service
+    pages:
+      objectStore:
+        bucket: gitlab-pages-storage-service
     ## https://docs.gitlab.com/charts/charts/globals#configure-appconfig-settings
     ## Rails based portions of this chart share many settings
     appConfig:
