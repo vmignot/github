@@ -1,0 +1,12 @@
+dependencies:
+- name: gitlab
+  repository: http://charts.gitlab.io/
+  version: 8.7.5
+- name: namespace
+  repository: https://chart-museum.service.digital.grouperandstad.fr
+  version: 1.10.1
+- name: external-secrets-generator
+  repository: https://chart-museum.service.digital.grouperandstad.fr
+  version: 1.5.0
+digest: sha256:8a1561e2e560e01ef104b088390f887f38f810f9b53ead57e5ad763e8eb1400c
+generated: "2025-03-10T10:04:44.802967+01:00"
